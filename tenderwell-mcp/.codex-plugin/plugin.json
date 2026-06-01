@@ -1,0 +1,19 @@
+{
+  "name": "tenderwell-mcp",
+  "version": "0.1.0",
+  "description": "Search global tenders and organizations from Codex with Tenderwell procurement intelligence across 180+ countries.",
+  "author": {
+    "name": "Tenderwell"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Tenderwell",
+    "shortDescription": "Search global tenders and organizations across 180+ countries.",
+    "longDescription": "Search global tenders and organizations directly from Codex. Tenderwell brings AI-powered public procurement intelligence into your workflow, with tender data from 180+ countries, 600,000+ organizations, open and forecast opportunities, awarded tenders, advanced filters, and AI-enriched summaries. Whether you are finding new opportunities, tracking markets, researching buyers and competitors, or preparing a proposal, Tenderwell helps you cut through global procurement data without leaving your conversation.",
+    "developerName": "Tenderwell",
+    "category": "Research",
+    "capabilities": [],
+    "defaultPrompt": "Use Tenderwell MCP to search and read global tenders and organizations."
+  },
+  "mcpServers": "./.mcp.json"
+}

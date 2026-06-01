@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "tenderwell": {
+      "type": "http",
+      "url": "https://tenderwell.com/mcp"
+    }
+  }
+}
