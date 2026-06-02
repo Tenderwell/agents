@@ -25,8 +25,8 @@ Do not claim support for document downloads, saved searches, bookmarks, pipeline
 - Use Tenderwell MCP tools whenever the user asks for Tenderwell tender or organization data.
 - If the request is unclear, required input is missing, or something appears misconfigured or not working, address that issue first and ask for clarification when needed before running MCP tools.
 - Use HTTP with streamable MCP transport for Tenderwell MCP requests.
-- When the configured endpoint and transport are already known to be correct, do not run the health-check script before every request.
-- When endpoint availability or MCP connectivity is uncertain, run `./scripts/tenderwell-mcp-health.sh` first to confirm `initialize` works and `tools/list` is non-empty before attempting the full workflow.
+- Use the direct MCP flow by default: initialize once, keep the returned `Mcp-Session-Id`, then call the requested Tenderwell tool.
+- When the endpoint and transport are already known, do not perform exploratory preflight checks before the requested MCP call.
 - Use MCP results as the source of truth for tender and organization data; do not scrape or infer Tenderwell records from the public website when MCP tools are available.
 - Search before reading when the user provides a description, keyword, buyer name, country, sector, or status instead of a concrete ID.
 - For ambiguous searches, request a small result page first, summarize candidates with IDs, then read details only for the relevant ID.
@@ -38,10 +38,10 @@ Do not claim support for document downloads, saved searches, bookmarks, pipeline
 - If the MCP server is unavailable, say that the Tenderwell MCP server is not reachable.
 - If `https://tenderwell.com/mcp` is unavailable, returns `404`, or cannot be reached, try the development endpoint `http://localhost:8088/mcp` before concluding that the Tenderwell MCP server is not reachable.
 - Treat `http://localhost:8088/mcp` as a development-only endpoint.
-- The health-check script tries the hosted endpoint first and then the local development endpoint by default; prefer it over ad hoc manual initialization checks when troubleshooting connectivity.
 - If a user asks about limits or access beyond the default free plan, link to [Tenderwell plans](https://tenderwell.com/plans).
 - When the MCP response includes a website or source URL, format it as a Markdown link so the user can click through directly. Do not create links for missing, anonymized, or inferred URLs.
 - When testing manually over HTTP, initialize first, keep the returned `Mcp-Session-Id`, and send `Accept: application/json, text/event-stream` on subsequent POST requests as well.
+- Do not assume the response will terminate as a single JSON document; handle `text/event-stream` responses correctly.
 - If the MCP response reports plan limits, rate limits, or unavailable data, report that status directly instead of guessing the user's plan.
 
 ## Tool Guidance
