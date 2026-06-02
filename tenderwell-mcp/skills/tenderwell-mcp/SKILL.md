@@ -54,6 +54,7 @@ These rules are mandatory for the default free-plan search behavior and should b
 
 - Include only fields that are required for the current request.
 - Never include fields whose value would be `null`, `""`, `[]`, or any other empty value.
+- Never include fields whose value would be `false` unless that field is explicitly allowed by the rules for that payload.
 - Never include `page` or `pageSize`. The backend applies defaults automatically.
 - Search payloads may only vary by supported filters and sorting fields.
 - Use a top-level `filter` object for `searchTenders` and `searchOrganizations`.
@@ -62,6 +63,7 @@ These rules are mandatory for the default free-plan search behavior and should b
 - Use uppercase enum values exactly as defined by the backend.
 - Use CPV codes for sector filters.
 - Use `codeAlpha2` country codes where country filters are supported.
+- Do not mirror backend DTO defaults, generated client payloads, or tool-schema placeholder fields into the request.
 
 ## Read Payload Rules
 
@@ -109,8 +111,13 @@ Organization fields not allowed:
 
 - `page`
 - `pageSize`
+- `detailsGenerated`
+- `detailsGenerationFailed`
+- `logoGenerated`
+- `logoGenerationFailed`
+- `sectorsNull`
 - Any field outside the allowed list above
-- Any allowed field with `null`, empty string, or empty list value
+- Any allowed field with `null`, `false`, empty string, or empty list value
 
 ## Allowed Tender Search Fields
 
@@ -176,5 +183,6 @@ Tender fields not allowed:
 
 - `page`
 - `pageSize`
+- Any internal boolean, generated flag, or schema-helper field not listed in the allowed field list
 - Any field outside the allowed list above
-- Any allowed field with `null`, empty string, or empty list value
+- Any allowed field with `null`, `false`, empty string, or empty list value
