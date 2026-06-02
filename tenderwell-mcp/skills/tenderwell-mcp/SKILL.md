@@ -26,6 +26,7 @@ Do not claim support for document downloads, saved searches, bookmarks, pipeline
 ## Operating Rules
 
 - Use Tenderwell MCP tools whenever the user asks for Tenderwell tender or organization data.
+- If the request is unclear, required input is missing, or something appears misconfigured or not working, address that issue first and ask for clarification when needed before running MCP tools.
 - Use MCP results as the source of truth for tender and organization data; do not scrape or infer Tenderwell records from the public website when MCP tools are available.
 - Search before reading when the user provides a description, keyword, buyer name, country, sector, or status instead of a concrete ID.
 - For ambiguous searches, request a small result page first, summarize candidates with IDs, then read details only for the relevant ID.
@@ -47,28 +48,133 @@ Do not claim support for document downloads, saved searches, bookmarks, pipeline
 - `searchOrganizations`: keyword/type/country/sector organization searches. Pass a `filter` object.
 - `readOrganization`: detailed organization lookup by `organizationId`.
 
-## Examples
+## Search Payload Rules
 
-`searchOrganizations` with a minimal payload:
+These rules are mandatory for the default free-plan search behavior and should be followed by this skill and any other agent instructions that construct Tenderwell search payloads.
+
+- Include only fields that are required for the current request.
+- Never include fields whose value would be `null`, `""`, `[]`, or any other empty value.
+- Never include `page` or `pageSize`. The backend applies defaults automatically.
+- Search payloads may only vary by supported filters and sorting fields.
+- Use a top-level `filter` object for `searchTenders` and `searchOrganizations`.
+- Prefer the smallest set of filters that answers the request. Do not add speculative filters.
+- Use ISO dates in `YYYY-MM-DD` format for date fields.
+- Use uppercase enum values exactly as defined by the backend.
+- Use CPV codes for sector filters.
+- Use `codeAlpha2` country codes where country filters are supported.
+
+## Read Payload Rules
+
+- Use `readTender` only with `{"tenderId": ...}`.
+- Use `readOrganization` only with `{"organizationId": ...}`.
+- Do not include a `filter` object in read requests.
+- Do not include any extra fields in read requests.
+
+## Allowed Organization Search Fields
+
+Use only these fields inside `filter` for `searchOrganizations`:
+
+- `sortBy`
+- `sortOrder`
+- `freetext`
+- `organizationTypes`
+- `countryCodes`
+- `sectors`
+
+Organization field rules:
+
+- `organizationTypes` must contain only `CONTRACTING`, `BUYER`, or `AWARD`.
+- `countryCodes` must contain `codeAlpha2` values.
+- `sectors` must contain CPV codes.
+- Omit `freetext` when it would be empty.
+- Omit any list field when it would be empty.
+- Use `sortOrder` only together with `sortBy`.
+
+Organization payload shape:
 
 ```json
-{"filter":{"page":1,"pageSize":5}}
+{
+  "filter": {
+    "sortBy": ["..."],
+    "sortOrder": ["..."],
+    "freetext": "...",
+    "organizationTypes": ["CONTRACTING"],
+    "countryCodes": ["DE"],
+    "sectors": ["03000000"]
+  }
+}
 ```
 
-`searchTenders` with a keyword search:
+Organization fields not allowed:
+
+- `page`
+- `pageSize`
+- Any field outside the allowed list above
+- Any allowed field with `null`, empty string, or empty list value
+
+## Allowed Tender Search Fields
+
+Use only these fields inside `filter` for `searchTenders`:
+
+- `sortBy`
+- `sortOrder`
+- `freetext`
+- `status`
+- `sectors`
+- `placeOfPerformance`
+- `budgetMin`
+- `budgetMax`
+- `updatedFrom`
+- `updatedUntil`
+- `deadlineFrom`
+- `deadlineUntil`
+- `publicationFrom`
+- `publicationUntil`
+- `contractTypes`
+
+Tender field rules:
+
+- `status` must contain only `FORECAST`, `OPEN`, `CLOSED`, `AWARDED`, or `CANCELLED`.
+- `contractTypes` must contain only `WORKS`, `GOODS`, `SERVICES`, `CONSTRUCTION`, `COMBINED`, `OTHERS`, `CONSULTANCY_SERVICES`, or `UNKNOWN`.
+- `sectors` must contain CPV codes.
+- `placeOfPerformance` must contain `codeAlpha2` country codes.
+- `budgetMin` and `budgetMax` must be numeric.
+- If both budget fields are present, `budgetMin` must be less than or equal to `budgetMax`.
+- If both `updatedFrom` and `updatedUntil` are present, `updatedFrom` must be earlier than or equal to `updatedUntil`.
+- If both `deadlineFrom` and `deadlineUntil` are present, `deadlineFrom` must be earlier than or equal to `deadlineUntil`.
+- If both `publicationFrom` and `publicationUntil` are present, `publicationFrom` must be earlier than or equal to `publicationUntil`.
+- Omit `freetext` when it would be empty.
+- Omit any list field when it would be empty.
+- Omit any optional scalar field when it would be `null`.
+- Use `sortOrder` only together with `sortBy`.
+
+Tender payload shape:
 
 ```json
-{"filter":{"page":1,"pageSize":10,"freetext":"health"}}
+{
+  "filter": {
+    "sortBy": ["..."],
+    "sortOrder": ["..."],
+    "freetext": "...",
+    "status": ["OPEN"],
+    "sectors": ["03000000"],
+    "placeOfPerformance": ["DE"],
+    "budgetMin": 1000,
+    "budgetMax": 5000,
+    "updatedFrom": "2026-01-01",
+    "updatedUntil": "2026-01-31",
+    "deadlineFrom": "2026-02-01",
+    "deadlineUntil": "2026-02-28",
+    "publicationFrom": "2026-01-01",
+    "publicationUntil": "2026-01-31",
+    "contractTypes": ["SERVICES"]
+  }
+}
 ```
 
-`readOrganization`:
+Tender fields not allowed:
 
-```json
-{"organizationId":12345}
-```
-
-`readTender`:
-
-```json
-{"tenderId":12345}
-```
+- `page`
+- `pageSize`
+- Any field outside the allowed list above
+- Any allowed field with `null`, empty string, or empty list value
