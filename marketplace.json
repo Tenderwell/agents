@@ -1,0 +1,20 @@
+{
+  "name": "tenderwell",
+  "interface": {
+    "displayName": "Tenderwell"
+  },
+  "plugins": [
+    {
+      "name": "tenderwell-mcp",
+      "source": {
+        "source": "local",
+        "path": "./tenderwell-mcp"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Research"
+    }
+  ]
+}

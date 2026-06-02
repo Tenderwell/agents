@@ -45,7 +45,21 @@ tenderwell-mcp/
 
 ## Codex
 
-Install `tenderwell-mcp/` as a Codex plugin.
+Install the repository as a Codex marketplace, then install `tenderwell-mcp` from that marketplace.
+
+From a branch:
+
+```bash
+codex plugin marketplace add https://github.com/Tenderwell/agents --ref story/TEN-9516-add-references-for-ai-agents
+codex plugin add tenderwell-mcp@tenderwell
+```
+
+From the default branch:
+
+```bash
+codex plugin marketplace add https://github.com/Tenderwell/agents
+codex plugin add tenderwell-mcp@tenderwell
+```
 
 Codex reads:
 
