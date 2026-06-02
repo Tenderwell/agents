@@ -46,29 +46,22 @@ tenderwell-mcp/
 
 ## Codex
 
-Install the repository as a Codex marketplace, then install `tenderwell-mcp` from that marketplace.
+Codex installs plugins from configured marketplaces. This repository includes a marketplace manifest at `.agents/plugins/marketplace.json`, so install Codex support in two steps:
 
-From a branch:
-
-```bash
-codex plugin marketplace add https://github.com/Tenderwell/agents --ref story/TEN-9516-add-references-for-ai-agents
-codex plugin add tenderwell-mcp@tenderwell
-```
-
-From the default branch:
+1. Register the repository as a Codex marketplace.
+2. Install `tenderwell-mcp` from the `tenderwell` marketplace.
 
 ```bash
 codex plugin marketplace add https://github.com/Tenderwell/agents
+codex plugin marketplace list // Check if Tenderwell is present as marketplace
 codex plugin add tenderwell-mcp@tenderwell
 ```
 
-Codex reads:
+To upgrade the marketplace:
 
-- `.codex-plugin/plugin.json`
-- `.mcp.json`
-- `skills/tenderwell-mcp/SKILL.md`
-
-The Codex plugin registers the Tenderwell MCP endpoint and loads the Tenderwell skill instructions.
+```bash
+codex plugin marketplace upgrade tenderwell
+```
 
 ## Claude Code
 

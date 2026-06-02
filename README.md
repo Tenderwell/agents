@@ -23,21 +23,3 @@ https://tenderwell.com/mcp
 ```
 
 See [`tenderwell-mcp/README.md`](tenderwell-mcp/README.md) for installation and runtime-specific setup.
-
-## Codex Marketplace
-
-This repository includes a repo marketplace manifest at [`.agents/plugins/marketplace.json`](.agents/plugins/marketplace.json), so Codex can use it as a marketplace source.
-
-Install from a branch:
-
-```bash
-codex plugin marketplace add https://github.com/Tenderwell/agents --ref story/TEN-9516-add-references-for-ai-agents
-codex plugin add tenderwell-mcp@tenderwell
-```
-
-Install from the default branch:
-
-```bash
-codex plugin marketplace add https://github.com/Tenderwell/agents
-codex plugin add tenderwell-mcp@tenderwell
-```
