@@ -1,10 +1,18 @@
 # Tenderwell MCP
 
-Tenderwell MCP connects AI agent runtimes to Tenderwell procurement intelligence through a remote MCP server.
+Tenderwell MCP connects AI agent runtimes to Tenderwell procurement intelligence through MCP.
 
 ```text
 https://tenderwell.com/mcp
 ```
+
+Development endpoint:
+
+```text
+http://localhost:8088/mcp
+```
+
+Use `http://localhost:8088/mcp` for development. If the hosted endpoint is unavailable or returns `404`, try the development endpoint before treating the MCP server as unreachable.
 
 ## Overview
 
@@ -65,10 +73,10 @@ codex plugin marketplace upgrade tenderwell
 
 ## Claude Code
 
-Add the Tenderwell MCP server with the Claude Code CLI:
+Add the Tenderwell MCP server with the Claude Code CLI for development:
 
 ```bash
-claude mcp add --transport http tenderwell https://tenderwell.com/mcp
+claude mcp add --transport http tenderwell http://localhost:8088/mcp
 ```
 
 Alternatively, copy the project-level MCP template:
@@ -83,10 +91,10 @@ For Claude connector or directory packaging, start from `configs/claude-connecto
 
 ## Gemini CLI
 
-Add the Tenderwell MCP server with the Gemini CLI:
+Add the Tenderwell MCP server with the Gemini CLI for development:
 
 ```bash
-gemini mcp add --transport http tenderwell https://tenderwell.com/mcp
+gemini mcp add --transport http tenderwell http://localhost:8088/mcp
 ```
 
 Alternatively, merge `configs/gemini.settings.json` into one of:

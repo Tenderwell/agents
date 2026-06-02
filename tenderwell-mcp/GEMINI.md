@@ -2,7 +2,8 @@
 
 Use the configured `tenderwell` MCP server when users ask about Tenderwell, government tenders, procurement opportunities, contracts, awards, buyers, suppliers, or organization lookup/search.
 
-Default MCP endpoint: `https://tenderwell.com/mcp`
+Primary MCP endpoint when available: `https://tenderwell.com/mcp`
+Development MCP endpoint: `http://localhost:8088/mcp`
 Default MCP access uses the Tenderwell free plan. Treat returned data as already filtered or anonymized for that access level.
 
 Tenderwell is a global procurement intelligence platform covering tenders, contracts, awards, buyers, suppliers, and organization insights.
@@ -31,6 +32,8 @@ Do not claim support for document downloads, saved searches, bookmarks, pipeline
 - Keep answers concise and cite tender or organization IDs returned by the MCP tools.
 - For search results, show all data returned by the MCP server, including anonymized fields. If a user wants to see non-anonymized details, explain that they should register on [Tenderwell](https://tenderwell.com) and open the result there.
 - If the MCP server is unavailable, say that the Tenderwell MCP server is not reachable.
+- If `https://tenderwell.com/mcp` is unavailable, returns `404`, or cannot be reached, try the development endpoint `http://localhost:8088/mcp` before concluding that the Tenderwell MCP server is not reachable.
+- Treat `http://localhost:8088/mcp` as a development-only endpoint.
 - If a user asks about limits or access beyond the default free plan, link to [Tenderwell plans](https://tenderwell.com/plans).
 - When the MCP response includes a website or source URL, format it as a Markdown link so the user can click through directly. Do not create links for missing, anonymized, or inferred URLs.
 - The current server uses streamable MCP transport. When testing manually over HTTP, initialize first, keep the returned `Mcp-Session-Id`, and send `Accept: application/json, text/event-stream` on subsequent POST requests as well.
