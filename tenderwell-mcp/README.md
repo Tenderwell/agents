@@ -44,6 +44,7 @@ Unsupported operations include document downloads, saved searches, bookmarks, pi
 tenderwell-mcp/
   .codex-plugin/plugin.json          Codex plugin metadata
   .mcp.json                          Codex MCP server configuration
+  scripts/tenderwell-mcp-health.sh   MCP initialize + tools/list preflight
   skills/tenderwell-mcp/SKILL.md     Codex skill instructions
   CLAUDE.md                          Claude / Claude Code instructions
   GEMINI.md                          Gemini CLI instructions
@@ -51,6 +52,28 @@ tenderwell-mcp/
   configs/claude-connector.md        Claude connector notes
   configs/gemini.settings.json       Gemini CLI settings template
 ```
+
+## Health Check
+
+Run the preflight script before a full MCP workflow when you want a fast connectivity check:
+
+```bash
+./scripts/tenderwell-mcp-health.sh
+```
+
+By default it tries the hosted endpoint first and then the local development endpoint. You can also pass one or more endpoints explicitly:
+
+```bash
+./scripts/tenderwell-mcp-health.sh http://localhost:8088/mcp
+```
+
+The script verifies:
+
+- `initialize` succeeds
+- `tools/list` succeeds
+- `tools/list` returns a non-empty tool list
+
+Runtime instruction files treat this script as the preferred preflight step when MCP connectivity is uncertain, instead of doing manual `initialize` probing first.
 
 ## Codex
 
