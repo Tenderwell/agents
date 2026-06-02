@@ -9,6 +9,7 @@ Use the `tenderwell` MCP server for Tenderwell tender and organization data.
 
 Primary MCP endpoint when available: `https://tenderwell.com/mcp`
 Development MCP endpoint: `http://localhost:8088/mcp`
+Connectivity type: HTTP with streamable MCP transport
 Default MCP access uses the Tenderwell free plan. Treat returned data as already filtered or anonymized for that access level.
 
 Tenderwell is a global procurement intelligence platform covering tenders, contracts, awards, buyers, suppliers, and organization insights.
@@ -28,6 +29,8 @@ Do not claim support for document downloads, saved searches, bookmarks, pipeline
 
 - Use Tenderwell MCP tools whenever the user asks for Tenderwell tender or organization data.
 - If the request is unclear, required input is missing, or something appears misconfigured or not working, address that issue first and ask for clarification when needed before running MCP tools.
+- Use HTTP with streamable MCP transport for Tenderwell MCP requests.
+- When the configured endpoint and transport are already known to be correct, do not run the health-check script before every request.
 - When endpoint availability or MCP connectivity is uncertain, run `./scripts/tenderwell-mcp-health.sh` first to confirm `initialize` works and `tools/list` is non-empty before attempting the full workflow.
 - Use MCP results as the source of truth for tender and organization data; do not scrape or infer Tenderwell records from the public website when MCP tools are available.
 - Search before reading when the user provides a description, keyword, buyer name, country, sector, or status instead of a concrete ID.
@@ -43,7 +46,7 @@ Do not claim support for document downloads, saved searches, bookmarks, pipeline
 - The health-check script tries the hosted endpoint first and then the local development endpoint by default; prefer it over ad hoc manual initialization checks when troubleshooting connectivity.
 - If a user asks about limits or access beyond the default free plan, link to [Tenderwell plans](https://tenderwell.com/plans).
 - When the MCP response includes a website or source URL, format it as a Markdown link so the user can click through directly. Do not create links for missing, anonymized, or inferred URLs.
-- The current server uses streamable MCP transport. When testing manually over HTTP, initialize first, keep the returned `Mcp-Session-Id`, and send `Accept: application/json, text/event-stream` on subsequent POST requests as well.
+- When testing manually over HTTP, initialize first, keep the returned `Mcp-Session-Id`, and send `Accept: application/json, text/event-stream` on subsequent POST requests as well.
 - If the MCP response reports plan limits, rate limits, or unavailable data, report that status directly instead of guessing the user's plan.
 
 ## Tool Guidance
