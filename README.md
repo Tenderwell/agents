@@ -26,7 +26,7 @@ See [`tenderwell-mcp/README.md`](tenderwell-mcp/README.md) for installation and 
 
 ## Codex Marketplace
 
-This repository includes a root [`marketplace.json`](marketplace.json), so Codex can use it as a marketplace source.
+This repository includes a repo marketplace manifest at [`.agents/plugins/marketplace.json`](.agents/plugins/marketplace.json), so Codex can use it as a marketplace source.
 
 Install from a branch:
 

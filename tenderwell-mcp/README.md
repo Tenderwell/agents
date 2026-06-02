@@ -32,6 +32,7 @@ Unsupported operations include document downloads, saved searches, bookmarks, pi
 ## Package Layout
 
 ```text
+.agents/plugins/marketplace.json      Codex marketplace manifest
 tenderwell-mcp/
   .codex-plugin/plugin.json          Codex plugin metadata
   .mcp.json                          Codex MCP server configuration
