@@ -12,7 +12,7 @@ Development endpoint:
 http://localhost:8088/mcp
 ```
 
-Use `http://localhost:8088/mcp` for development. If the hosted endpoint is unavailable or returns `404`, try the development endpoint before treating the MCP server as unreachable.
+Use `http://localhost:8088/mcp` for development only. If the hosted endpoint is unavailable or returns `404`, do not automatically fallback to localhost outside an explicitly configured local development environment.
 
 ## Overview
 

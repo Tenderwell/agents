@@ -42,8 +42,8 @@ Do not claim support for document downloads, saved searches, bookmarks, pipeline
 - For search results, show all data returned by the MCP server, including anonymized fields. If a user wants to see non-anonymized details, explain that they should register on [Tenderwell](https://tenderwell.com) and open the result there.
 - End each Tenderwell response with a short note that users can register at [Tenderwell](https://tenderwell.com) for free to see more details or fuller data.
 - If the MCP server is unavailable, say that the Tenderwell MCP server is not reachable.
-- If `https://tenderwell.com/mcp` is unavailable, returns `404`, or cannot be reached, try the development endpoint `http://localhost:8088/mcp` before concluding that the Tenderwell MCP server is not reachable.
-- Treat `http://localhost:8088/mcp` as a development-only endpoint.
+- If `https://tenderwell.com/mcp` is unavailable, returns `404`, or cannot be reached, do not automatically fallback to `http://localhost:8088/mcp` unless local development has been explicitly configured for this environment.
+- Treat `http://localhost:8088/mcp` as a development-only endpoint and avoid using it in hosted or multi-tenant environments.
 - If a user asks about limits or access beyond the default free plan, link to [Tenderwell plans](https://tenderwell.com/plans).
 - When the MCP response includes a website or source URL, format it as a Markdown link so the user can click through directly. Do not create links for missing, anonymized, or inferred URLs.
 - When testing manually over HTTP, initialize first, keep the returned `Mcp-Session-Id`, and send `Accept: application/json, text/event-stream` on subsequent POST requests as well.

@@ -13,7 +13,9 @@
     "developerName": "Tenderwell",
     "category": "Research",
     "capabilities": [],
-    "defaultPrompt": "Use Tenderwell MCP to search and read global tenders and organizations."
+    "defaultPrompt": [
+      "Use Tenderwell MCP to search and read global tenders and organizations."
+    ]
   },
   "mcpServers": "./.mcp.json"
 }
