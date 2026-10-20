@@ -12,7 +12,8 @@ Tenderwell MCP integration for searching and reading tenders and organizations.
 
 Supported targets:
 
-- Codex: plugin manifest, MCP config, and Codex skill.
+- Codex: marketplace plugin with MCP config and a Tenderwell skill, or a direct MCP connection.
+- ChatGPT: custom remote MCP connection through Plugins; setup instructions are in the package README.
 - Claude and Claude Code: MCP config and `CLAUDE.md` instructions.
 - Gemini CLI: MCP config and `GEMINI.md` instructions.
 
