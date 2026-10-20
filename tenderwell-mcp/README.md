@@ -23,7 +23,7 @@ The Tenderwell MCP endpoint requires sign-in. Calls without a valid token return
 
 1. The client opens the browser on the Tenderwell sign-in page.
 2. The user signs in or registers, then approves the connection.
-3. The browser returns to the client, which stores the access token locally and sends it with every request.
+3. The browser returns to the client, which stores the access token and sends it with every request. CLI clients (Claude Code, Gemini CLI, Codex CLI) keep the token on your device; ChatGPT and the Claude apps connect from their providers' cloud services, which hold the token.
 
 No API key needs to be copied. The flow uses OAuth 2.1 with PKCE and dynamic client registration, so the MCP configuration only needs the endpoint URL.
 
@@ -68,7 +68,7 @@ Every call runs under the signed-in user's active Tenderwell plan, and restricti
 - **Search restrictions.** A plan can cap `page` and `pageSize`, disallow custom filters, or allow only the default sorting. A request outside the plan returns an error that describes what is allowed.
 - **Search limit reached.** Searches keep working with reduced access. The response carries a `notice`, values marked `paywall: true` are hidden, and the restrictions above apply until the counter resets or the plan is upgraded.
 - **Read limit reached.** Reads return an error that links to the upgrade page. Records already opened that day can still be read.
-- **Anonymized data.** Fields flagged `anonymized` are hidden by the plan's access rules; the user can register or upgrade on [Tenderwell](https://tenderwell.com) to see them.
+- **Anonymized data.** Fields flagged `anonymized` are hidden by the plan's access rules; the user can upgrade their plan on [Tenderwell](https://tenderwell.com/plans) to see them.
 
 Agents should relay `notice`, `usage`, and error messages to the user rather than guessing limits.
 
@@ -183,13 +183,18 @@ The tools available through either setup are listed above. Downloads, saved sear
 
 ## Claude app: custom connector
 
-1. Open Claude on the web (claude.ai) or the desktop app and go to **Settings → Connectors**.
-2. Select **Add custom connector**.
-3. Enter `Tenderwell` as the name and `https://tenderwell.com/mcp` as the URL. No API key is needed.
-4. Select **Add**, then **Connect**. Sign in to Tenderwell and approve access.
-5. Start a new chat, enable the Tenderwell connector from the **+** menu and ask Claude to find tenders.
+**Individual (Pro and Max) plans:**
 
-On Team and Enterprise plans, an organization owner may need to add the connector first. Account and workspace policies may limit which custom connectors a user can add.
+1. Open Claude on the web (claude.ai) or the desktop app and go to **Customize → Connectors**.
+2. Select **+ Add**, then **Add custom connector**.
+3. Enter `Tenderwell` as the name and `https://tenderwell.com/mcp` as the URL, then select **Continue**. No API key is needed.
+4. Review the detected authentication settings and select **Continue**. Tenderwell supports dynamic client registration, so keep the recommended OAuth client option (**Use Claude's published identity**) or choose **Register automatically**.
+5. Select **Add**, then **Connect**. Sign in to Tenderwell and approve access.
+6. Start a new chat, enable the Tenderwell connector from the **+** menu and ask Claude to find tenders.
+
+**Team and Enterprise plans:** an organization owner first adds the connector under **Organization settings → Connectors** (**Add → Custom → Web**) with the same name and URL and the same authentication settings. Members then open **Customize → Connectors**, find Tenderwell and select **Connect**.
+
+Claude connects to the server from Anthropic's cloud infrastructure, not from your device. Account and workspace policies may limit which custom connectors a user can add.
 
 ## Claude Code: terminal
 
@@ -200,6 +205,18 @@ claude mcp add --scope user --transport http tenderwell https://tenderwell.com/m
 ```
 
 Start Claude Code, run `/mcp`, select `tenderwell` and choose **Authenticate**. Sign in to Tenderwell and approve access in your browser, then start a new session. Newer versions also support `claude mcp login tenderwell`.
+
+## Gemini CLI
+
+With Gemini CLI installed, add the Tenderwell MCP server:
+
+```bash
+gemini mcp add --transport http tenderwell https://tenderwell.com/mcp
+```
+
+Alternatively, merge `configs/gemini.settings.json` into `~/.gemini/settings.json` (all projects) or `.gemini/settings.json` (one project). Start Gemini CLI, run `/mcp auth tenderwell`, then sign in to Tenderwell and approve access in your browser.
+
+Place `GEMINI.md` in the Gemini CLI project where the Tenderwell instructions should apply.
 
 ## Agent Instructions
 

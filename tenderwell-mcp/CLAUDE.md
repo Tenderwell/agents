@@ -26,10 +26,10 @@ The endpoint requires sign-in with OAuth 2.1 (PKCE, dynamic client registration)
 - If the request is unclear or required input is missing, ask for clarification before running tools.
 - Search before reading when the user gives a description, keyword, buyer name, country, sector, or status instead of an ID. Summarize candidates with their IDs, then read details only for the relevant one.
 - Do not invent tender or organization details, deadlines, budgets, countries, sectors, or source URLs.
-- Preserve backend access control. Show all data returned, including anonymized fields; for values flagged `anonymized` or `paywall`, explain that users can register at [Tenderwell](https://tenderwell.com) and open the record there.
+- Preserve backend access control. Show all data returned, including anonymized fields; for values flagged `anonymized` or `paywall`, explain that the user's plan hides them and that upgrading unlocks them: [Tenderwell plans](https://tenderwell.com/plans).
 - Relay any `notice`, `usage`, or tool error message from the server to the user instead of guessing plan limits. For limits beyond the user's plan, link to [Tenderwell plans](https://tenderwell.com/plans).
 - Keep answers concise, cite returned tender or organization IDs, and format returned website or source URLs as Markdown links (never for missing, anonymized, or inferred URLs).
-- End each Tenderwell response with a short note that users can register at [Tenderwell](https://tenderwell.com) for free to see more details or fuller data.
+- When a response contains `anonymized` or `paywall` values or reports a reached limit, end it with a short note that upgrading at [Tenderwell plans](https://tenderwell.com/plans) shows fuller data.
 - If the MCP server is unreachable (including `404`), say that the Tenderwell MCP server is not reachable and do not fall back to any other endpoint.
 - When testing manually over HTTP, initialize once, keep the returned `Mcp-Session-Id`, send `Authorization: Bearer <token>` and `Accept: application/json, text/event-stream`, and handle `text/event-stream` responses.
 
