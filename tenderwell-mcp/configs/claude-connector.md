@@ -14,4 +14,4 @@ Default endpoint:
 https://tenderwell.com/mcp
 ```
 
-Default access uses the Tenderwell free plan.
+The endpoint requires Tenderwell sign-in (OAuth 2.1 with PKCE and dynamic client registration; no API key). Access follows the signed-in user's active Tenderwell plan, including its daily search and read limits.
